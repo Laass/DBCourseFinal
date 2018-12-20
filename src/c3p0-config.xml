@@ -1,9 +1,10 @@
 <c3p0-config>
     <default-config>
         <property name="driverClass">com.mysql.cj.jdbc.Driver</property>
-        <property name="jdbcUrl">jdbc:mysql://localhost:3306/service_platform_db?useSSL=true&amp;serverTimezone=GMT</property>
+        <property name="jdbcUrl">jdbc:mysql://localhost:3306/dbfinal?useSSL=true&amp;serverTimezone=GMT</property>
         <property name="user">root</property>
-        <property name="password">mysql</property>
+        <!--<property name="password">mysql</property>-->
+        <property name="password"></property>
 
         <!--当连接池中的连接耗尽的时候c3p0一次同时获取的连接数。Default: 3 -->
         <property name="acquireIncrement">3</property>
