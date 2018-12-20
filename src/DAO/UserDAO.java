@@ -168,15 +168,15 @@ public class UserDAO extends DAOBase implements DAOBaseOperate<User>
 
     /**
      * 根据userid模糊查找
-     * @param partOfName
+     * @param partOfId
      * @return
      * @throws SQLException
      */
-    public List<User> searchByUserId(String partOfName) throws SQLException
+    public List<User> searchByUserId(String partOfId) throws SQLException
     {
         Connection conn=super.getConn();
         PreparedStatement ps=conn.prepareStatement("SELECT * FROM user WHERE userid LIKE ?");
-        ps.setString(1,'%'+partOfName+'%');
+        ps.setString(1,'%'+partOfId+'%');
         ResultSet rs=ps.executeQuery();
         ArrayList<User> uList=new ArrayList<>();
         while(rs.next())
