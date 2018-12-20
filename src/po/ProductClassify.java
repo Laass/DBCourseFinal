@@ -5,23 +5,23 @@ import DAO.DAOBaseOperate;
 
 public class ProductClassify {
 
-    private String productTypeid;
+    private int productTypeid;
     private String pid;
     private String path;
 
     public ProductClassify(){}
 
-    public ProductClassify(String productTypeid, String pid, String path) {
+    public ProductClassify(int productTypeid, String pid, String path) {
         this.productTypeid = productTypeid;
         this.pid = pid;
         this.path = path;
     }
 
-    public String getProductTypeid() {
+    public int getProductTypeid() {
         return productTypeid;
     }
 
-    public void setProductTypeid(String productTypeid) {
+    public void setProductTypeid(int productTypeid) {
         this.productTypeid = productTypeid;
     }
 
