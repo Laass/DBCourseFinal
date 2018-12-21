@@ -167,6 +167,12 @@ public class ProductDAO extends DAOBase implements DAOBaseOperate <Product> {
                lpo.add(new ProductDAO().get(i.getPid()));
            }
        }
+       else {
+           List<ProductClassify> list = new ProductClassifyDAO().findProductByPath(Type);
+           for(ProductClassify i : list){
+               lpo.add(new ProductDAO().get(i.getPid()));
+           }
+       }
         return lpo;
     }
 }

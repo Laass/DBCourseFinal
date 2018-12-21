@@ -1,6 +1,7 @@
 package DAO;
 
 import po.ProductClassify;
+import po.TypeTree;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
