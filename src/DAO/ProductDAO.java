@@ -2,6 +2,7 @@ package DAO;
 
 import com.mysql.cj.Query;
 import po.Product;
+import po.TypeTree;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -141,4 +142,14 @@ public class ProductDAO extends DAOBase implements DAOBaseOperate <Product> {
         return pro;
     }
 
+/*    public List<Product> findProductByType(String Type){
+        //先通过productType获取到类别id
+        //构建类别树，知晓类别下分范围
+        //获取类别下分范围的所有产品
+        TypeTree tt = new TypeTree();
+        tt = tt.createTree(2,4,"");
+        ProcutType pt = new ProductType();
+
+        return null;
+    }*/
 }
