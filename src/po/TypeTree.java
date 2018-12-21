@@ -117,4 +117,18 @@ public class TypeTree {
         return str.toString();
     }
 
+    public TypeTree getRange(int id){
+        for(int i = 0; i < fanum; ++i){
+            if(fa[i].getTypeIndex() == id)
+                return fa[i];
+            if(id > fa[i].getRangepre() && id < fa[i].getRangenex()) {
+                TypeTree temp = fa[i].getRange(id);
+                if(temp != null)
+                    return temp;
+            }
+        }
+        return null;
+    }
+
+
 }
