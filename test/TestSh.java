@@ -1,5 +1,7 @@
+import DAO.AddressDAO;
 import DAO.UserDAO;
 import DAO.UserInfoDAO;
+import po.Address;
 import po.User;
 import po.UserInfo;
 
@@ -35,7 +37,7 @@ public class TestSh
 //            System.out.println(uDAO.searchByEmail("bb"));
 //            System.out.println(uDAO.delete("2aa2"));
 //            测试UserInfoDAO部分
-            UserInfoDAO uiDAO=new UserInfoDAO();
+//            UserInfoDAO uiDAO=new UserInfoDAO();
 //            for(int i=1;i<2;i++)
 //            {
 //                UserInfo ui=new UserInfo();
@@ -56,6 +58,27 @@ public class TestSh
 //            System.out.println(uiDAO.searchByUserId("aa"));
 //            System.out.println(uiDAO.searchBySex('m'));
 //            System.out.println(uiDAO.searchBySex('f'));
+//            测试AddressDAO
+            AddressDAO aDAO=new AddressDAO();
+            Address a=new Address("1","address","receiver","123");
+//            aDAO.insert(a);
+//            Address b=new Address();
+//            b.setAddressId("63db99b18fd049968b5979d898da0c36");
+//            aDAO.delete(b);
+//            a=aDAO.get("4d611f4106734c5e820fe42f8311a804");
+//            a.setAddress("addressAddress");
+//            aDAO.update(a);
+//            aDAO.delete("4d611f4106734c5e820fe42f8311a804");
+//            Address b=new Address();
+//            b.setAddressId("34dd1abf6d9c42119bd562ab0cc84326");
+//            aDAO.delete(b);
+//            aDAO.insert(a);
+//            aDAO.insert(a);
+//            System.out.println(aDAO.searchByAddress("dd"));
+//            System.out.println(aDAO.searchByReceiver("ce"));
+//            System.out.println(aDAO.searchByTel("123"));
+            System.out.println(aDAO.searchByUserId("2"));
+
         }
         catch (SQLException e)
         {
