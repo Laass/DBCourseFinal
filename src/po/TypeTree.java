@@ -1,12 +1,14 @@
 package po;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TypeTree {
 
     private TypeTree next = null;
-    private TypeTree[] fa = new TypeTree[50];
-    private int fanum = 0;
+    //存子节点
+    private List<TypeTree> childrens = new ArrayList<TypeTree>();
     private int rangepre = 0;
     private int rangenex = 0;
     private int typeIndex;
@@ -45,20 +47,16 @@ public class TypeTree {
         this.rangenex = rangenex;
     }
 
-    public TypeTree[] getFa() {
-        return fa;
+    public List<TypeTree> getChildrens() {
+        return childrens;
     }
 
-    public void setFa(TypeTree[] fa) {
-        this.fa = fa;
+    public void addChildrens(TypeTree childrens) {
+        this.childrens.add(childrens);
     }
 
     public int getFanum() {
-        return fanum;
-    }
-
-    public void setFanum(int fanum) {
-        this.fanum = fanum;
+        return childrens.size();
     }
 
     public int getTypeIndex() {
@@ -69,7 +67,7 @@ public class TypeTree {
         this.typeIndex = typeIndex;
     }
 
-    public TypeTree createTree(int per, int total, String sta){
+    public TypeTree createTree(TypeTree treeroot, int per, int total, String sta){
         //平分层次
         int layer = total / per;
         //00舍弃，从01开始算
@@ -83,7 +81,7 @@ public class TypeTree {
             b_next += repeatCreate("0", per);
         }
 
-        //获取前不变字符
+        //获取分类个数
         String fa_s = repeatCreate("1", per);
 
         //开始建树，该层一共会分出2（per）次方-1个类
@@ -95,29 +93,40 @@ public class TypeTree {
 
             //获取2进制字符串
             String b_pre = Integer.toBinaryString(pre);
+            if(b_pre.length() < per)
+                b_pre = repeatCreate("0", per - b_pre.length()) + b_pre;
 
             //拼接2进制
             String s = sta + b_pre + b_next;
 
-            //设定兄弟节点
-            fa[fanum] = new TypeTree();
-            //类id
-            fa[fanum].setTypeIndex(Integer.parseInt(new BigInteger(s, 2).toString()));
-            //子类范围前驱
-            fa[fanum].setRangepre(fa[fanum].getTypeIndex() + 1);
-            b_pre = Integer.toBinaryString(pre+1);
-            s = sta + b_pre + b_next;
-            //子类范围后驱
-            fa[fanum].setRangenex(Integer.parseInt(new BigInteger(s,2).toString()) - 1);
 
-            //深度搜索设定兄弟节点的子类
-            fa[fanum].setNext(new TypeTree().createTree(per, total - per, Integer.toBinaryString(pre)));
+            TypeTree fa = new TypeTree();
+            //主类id
+            fa.setTypeIndex(Integer.parseInt(new BigInteger(s, 2).toString()));
+
+            //子类范围前驱
+            fa.setRangepre(fa.getTypeIndex() + 1);
+
+            b_pre = Integer.toBinaryString(pre+1);
+            if(b_pre.length() < per)
+                b_pre = repeatCreate("0", per - b_pre.length()) + b_pre;
+
+            //子类范围后驱
+            s = sta + b_pre + b_next;
+            fa.setRangenex(Integer.parseInt(new BigInteger(s,2).toString()) - 1);
+
+            String childrenSta = Integer.toBinaryString(pre);
+            if(childrenSta.length() < per){
+                childrenSta = repeatCreate("0",per - childrenSta.length()) + childrenSta;
+            }
+
+            //深度搜索设定子节点
+            createTree(fa, per, total - per, sta+childrenSta);
+
+            treeroot.addChildrens(fa);
 
             ++pre;
-            ++fanum;
         }
-
-        fa[fanum] = null;
 
         return this;
     }
@@ -131,11 +140,11 @@ public class TypeTree {
     }
 
     public TypeTree getRange(int id){
-        for(int i = 0; i < fanum; ++i){
-            if(fa[i].getTypeIndex() == id)
-                return fa[i];
-            if(id > fa[i].getRangepre() && id < fa[i].getRangenex()) {
-                TypeTree temp = fa[i].getRange(id);
+        for(TypeTree i : childrens){
+            if(i.getTypeIndex() == id)
+                return i;
+            if(id > i.getRangepre() && id < i.getRangenex()) {
+                TypeTree temp = i.getRange(id);
                 if(temp != null)
                     return temp;
             }

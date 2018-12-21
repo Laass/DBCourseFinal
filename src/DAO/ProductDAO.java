@@ -149,7 +149,7 @@ public class ProductDAO extends DAOBase implements DAOBaseOperate <Product> {
         //构建类别树，知晓类别下分范围
         //获取类别下分范围的所有产品
        TypeTree tt = new TypeTree();
-       tt = tt.createTree(2,4,"");
+       tt.createTree(tt,2,4,"");
        List<Product> lpo = new ArrayList<Product>();
        ProductTypeDAO ptdao = new ProductTypeDAO();
        ProductType pt = new ProductType();
