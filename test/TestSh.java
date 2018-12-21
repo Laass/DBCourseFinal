@@ -1,7 +1,9 @@
 import DAO.AddressDAO;
+import DAO.CommentDAO;
 import DAO.UserDAO;
 import DAO.UserInfoDAO;
 import po.Address;
+import po.Comment;
 import po.User;
 import po.UserInfo;
 
@@ -59,8 +61,8 @@ public class TestSh
 //            System.out.println(uiDAO.searchBySex('m'));
 //            System.out.println(uiDAO.searchBySex('f'));
 //            测试AddressDAO
-            AddressDAO aDAO=new AddressDAO();
-            Address a=new Address("1","address","receiver","123");
+//            AddressDAO aDAO=new AddressDAO();
+//            Address a=new Address("1","address","receiver","123");
 //            aDAO.insert(a);
 //            Address b=new Address();
 //            b.setAddressId("63db99b18fd049968b5979d898da0c36");
@@ -77,7 +79,21 @@ public class TestSh
 //            System.out.println(aDAO.searchByAddress("dd"));
 //            System.out.println(aDAO.searchByReceiver("ce"));
 //            System.out.println(aDAO.searchByTel("123"));
-            System.out.println(aDAO.searchByUserId("2"));
+//            System.out.println(aDAO.searchByUserId("2"));
+//            测试CommentDAO
+            CommentDAO cDAO=new CommentDAO();
+//            cDAO.insert(new Comment("1","123","commentcomment",'3'));
+//            cDAO.delete(new Comment("4acd83770e0e4c8f9ae6f017db04b380","1","123","commentcomment",'3'));
+//            cDAO.update(new Comment("d39d1f181aa34115bc8ad3485b186f9a","1","123","CommComment",'3'));
+//            System.out.println(cDAO.get(new Comment("d39d1f181aa34115bc8ad3485b186f9a","1","123","CommComment",'3')));
+//            Comment c=new Comment();
+//            c.setCommentId("d39d1f181aa34115bc8ad3485b186f9a");
+//            System.out.println(cDAO.get("d39d1f181aa34115bc8ad3485b186f9a"));
+//            System.out.println(cDAO.deleteById("d39d1f181aa34115bc8ad3485b186f9a"));
+//            System.out.println(cDAO.deleteByUser("1"));
+//            System.out.println(cDAO.searchByUserId("1"));
+//            System.out.println(cDAO.searchByContent("mm"));
+            System.out.println(cDAO.searchBypId("123"));
 
         }
         catch (SQLException e)
