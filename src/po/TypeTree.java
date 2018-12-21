@@ -70,34 +70,47 @@ public class TypeTree {
     }
 
     public TypeTree createTree(int per, int total, String sta){
-//        int total = 4;
-//        int per = 2;
-
+        //平分层次
         int layer = total / per;
+        //00舍弃，从01开始算
         int pre = 1;
+        //00舍弃，从01开始算
         int nex = 1;
+
+        //获取低位不变二进制位
         String b_next = "";
         for(int j =1 ; j < layer; ++j){
             b_next += repeatCreate("0", per);
         }
 
+        //获取前不变字符
         String fa_s = repeatCreate("1", per);
 
+        //开始建树，该层一共会分出2（per）次方-1个类
         for(int i = 0; i < Integer.parseInt(new BigInteger(fa_s, 2).toString()); ++i){
 
+            //如果分层为1，说明这层的节点是叶子节点，他们没有子类
             if(layer == 1)
                 return null;
 
+            //获取2进制字符串
             String b_pre = Integer.toBinaryString(pre);
 
+            //拼接2进制
             String s = sta + b_pre + b_next;
+
+            //设定兄弟节点
             fa[fanum] = new TypeTree();
+            //类id
             fa[fanum].setTypeIndex(Integer.parseInt(new BigInteger(s, 2).toString()));
+            //子类范围前驱
             fa[fanum].setRangepre(fa[fanum].getTypeIndex() + 1);
             b_pre = Integer.toBinaryString(pre+1);
             s = sta + b_pre + b_next;
+            //子类范围后驱
             fa[fanum].setRangenex(Integer.parseInt(new BigInteger(s,2).toString()) - 1);
 
+            //深度搜索设定兄弟节点的子类
             fa[fanum].setNext(new TypeTree().createTree(per, total - per, Integer.toBinaryString(pre)));
 
             ++pre;
