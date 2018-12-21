@@ -1,8 +1,10 @@
 import DAO.DAOBase;
 import DAO.ProductClassifyDAO;
 import DAO.ProductDAO;
+import DAO.ProductTypeDAO;
 import po.Product;
 import po.ProductClassify;
+import po.ProductType;
 
 import java.sql.*;
 import java.util.List;
@@ -30,11 +32,17 @@ public class TestSh
 //            System.out.println(pcdao.findProductByType(9).size());
 //            System.out.println(pcdao.delete(pc));
 
-            ProductDAO pdao = new ProductDAO();
+            /*ProductDAO pdao = new ProductDAO();
             List<Product> l =  pdao.findProductByType("母婴");
             for(Product i : l){
                 System.out.println(i.getTitle());
-            }
+            }*/
+
+            ProductTypeDAO ptdao = new ProductTypeDAO();
+            ProductType pt = new ProductType();
+            pt.setTypeName("女装毛衣");
+            System.out.println(ptdao.insertChildrenType(12,pt));
+
 
         }
         catch (SQLException e)
