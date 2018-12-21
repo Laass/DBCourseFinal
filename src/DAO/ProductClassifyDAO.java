@@ -196,7 +196,7 @@ public class ProductClassifyDAO extends DAOBase implements DAOBaseOperate <Produ
             rset = pst.executeQuery();
 
             while(rset.next()) {
-                if(rset.getString(3).contains(path))
+                if(rset.getString(3) != null && rset.getString(3).contains(path))
                     list.add(new ProductClassify(rset.getInt(1),rset.getString(2),rset.getString(3)));
             }
 

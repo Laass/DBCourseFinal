@@ -31,7 +31,7 @@ public class TestSh
 //            System.out.println(pcdao.delete(pc));
 
             ProductDAO pdao = new ProductDAO();
-            List<Product> l =  pdao.findProductByType("母婴");
+            List<Product> l =  pdao.findProductByType("鄂尔多斯");
             for(Product i : l){
                 System.out.println(i.getTitle());
             }
