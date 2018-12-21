@@ -7,8 +7,8 @@ public class TypeTree {
     private TypeTree next = null;
     private TypeTree[] fa = new TypeTree[50];
     private int fanum = 0;
-    private int rangepre;
-    private int rangenex;
+    private int rangepre = 0;
+    private int rangenex = 0;
     private int typeIndex;
 
     public Boolean hasNext(){
@@ -129,6 +129,5 @@ public class TypeTree {
         }
         return null;
     }
-
 
 }
