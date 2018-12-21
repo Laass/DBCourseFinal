@@ -6,7 +6,7 @@ import java.sql.*;
 
 public class DAOBase implements DAO
 {
-    private static ComboPooledDataSource ds=null;
+    private  static ComboPooledDataSource ds=null;
     static
     {
         try

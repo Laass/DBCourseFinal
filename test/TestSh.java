@@ -1,25 +1,21 @@
-import DAO.DAOBase;
+import DAO.user_wanna_productDAO;
+import po.user_wanna_product;
+import po.uwpPrimaryKey;
 
 import java.sql.*;
+import java.util.List;
 
 public class TestSh
 {
     public static void main(String[] args)
     {
-        try
-        {
-            Connection conn=new DAOBase().getConn();
-            Statement st=conn.createStatement();
-            ResultSet rs=st.executeQuery("SELECT * FROM user");
-            while(rs.next())
-            {
-                System.out.println(rs.getString(1)+rs.getString(2));
-            }
-        }
-        catch (SQLException e)
-        {
+        user_wanna_productDAO udao = new user_wanna_productDAO();
+        List<user_wanna_product> list = null;
+        try {
+            list = udao.search("1","123",-1);
+        } catch (SQLException e) {
             e.printStackTrace();
         }
-
+        System.out.println(list.size());
     }
 }
