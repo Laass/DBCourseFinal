@@ -82,4 +82,10 @@ public class UserInfo
     }
 
     public UserInfo(){}
+
+    @Override
+    public String toString()
+    {
+        return userId+" "+nickName+" "+sex;
+    }
 }
