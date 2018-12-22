@@ -3,7 +3,7 @@ package DAO;
 import java.sql.SQLException;
 import java.util.List;
 
-public interface DAOBaseOperate <T extends Object>{
+public interface DAOBaseOperate <T>{
 
     /**
      * 插入新值
