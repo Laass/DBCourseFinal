@@ -94,7 +94,6 @@ public class TestSh
 //            System.out.println(cDAO.searchByUserId("1"));
 //            System.out.println(cDAO.searchByContent("mm"));
             System.out.println(cDAO.searchBypId("123"));
-
         }
         catch (SQLException e)
         {
