@@ -86,17 +86,18 @@ public class ProductDAO extends DAOBase implements DAOBaseOperate <Product> {
         try {
             String sql = "update product set ";
             if (o.getTitle() != null)
-                sql += "title = '" + o.getTitle() + "'";
+                sql += "title = '" + o.getTitle() + "', ";
             if (o.getContent() != null)
-                sql += ", content = '" + o.getContent() + "'";
+                sql += "content = '" + o.getContent() + "', ";
             if (o.getPrice() != 0)
-                sql += ", price = '" + o.getPrice() + "'";
+                sql += "price = '" + o.getPrice() + "', ";
             if (o.getMark() != null)
-                sql += ", mark = '" + o.getMark() + "'";
+                sql += "mark = '" + o.getMark() + "', ";
             if(o.getImagePath() != null)
-                sql += ", imagePath = '" + o.getImagePath()+ "'";
+                sql += "imagePath = '" + o.getImagePath()+ "', ";
             if(o.getType() != null)
-                sql += ", type = '" + o.getType() + "'";
+                sql += "type = '" + o.getType() + "', ";
+            sql = sql.substring(0, sql.length() - 2);
             sql += " where pid = ?";
             pst = conn.prepareStatement(sql);
             pst.setString(1, o.getPid());
@@ -148,23 +149,31 @@ public class ProductDAO extends DAOBase implements DAOBaseOperate <Product> {
         //先通过productType获取到类别id
         //构建类别树，知晓类别下分范围
         //获取类别下分范围的所有产品
-        TypeTree tt = new TypeTree();
-        tt = tt.createTree(2,4,"");
+       TypeTree tt = new TypeTree();
+       tt.createTree(tt,2,4,"");
+       List<Product> lpo = new ArrayList<Product>();
        ProductTypeDAO ptdao = new ProductTypeDAO();
        ProductType pt = new ProductType();
        pt.setTypeName(Type);
        pt = ptdao.get(pt);//获取类别id
-       List<Product> lpo = new ArrayList<Product>();
 
-       TypeTree treeNode = tt.getRange(pt.getProdutTypeId());
-       if(treeNode != null){
-           List<ProductClassify> list = new ArrayList<ProductClassify>();
-           if(treeNode.getRangenex() == 0)
-                list = new ProductClassifyDAO().findProductByType(treeNode.getTypeIndex());
-           else
-               list = new ProductClassifyDAO().findProductInTypeRange(treeNode);
+       if(pt == null){
+           List<ProductClassify> list = new ProductClassifyDAO().findProductByPath(Type);
            for(ProductClassify i : list){
                lpo.add(new ProductDAO().get(i.getPid()));
+           }
+       }
+       else {
+           TypeTree treeNode = tt.getRange(pt.getProdutTypeId());
+           if (treeNode != null) {
+               List<ProductClassify> list = new ArrayList<ProductClassify>();
+               if (treeNode.getRangenex() == 0)
+                   list = new ProductClassifyDAO().findProductByType(treeNode.getTypeIndex());
+               else
+                   list = new ProductClassifyDAO().findProductInTypeRange(treeNode);
+               for (ProductClassify i : list) {
+                   lpo.add(new ProductDAO().get(i.getPid()));
+               }
            }
        }
         return lpo;
