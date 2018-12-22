@@ -46,7 +46,7 @@ public class ProductTypeDAO extends DAOBase implements DAOBaseOperate<ProductTyp
         Boolean flag = true;
 
         //获取类别树
-        tt = tt.createTree(2,4,"");
+        tt.createTree(tt, 2,4,"");
         //判断该类别是否有子类别
         if(tt.getRange(parentProductTypeId).getRangenex() == 0)
             return false;
