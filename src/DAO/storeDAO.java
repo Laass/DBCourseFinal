@@ -48,7 +48,7 @@ public class storeDAO extends DAOBase implements DAOBaseOperate {
             conn= super.getConn();
             st = conn.createStatement();
             String sql = "delete from store "+
-                    "where storeid="+sid;
+                    "where storeid=\'"+sid+"\'";
             st.executeUpdate(sql);
             System.out.println("删除执行成功");
             flag = true;
@@ -75,7 +75,7 @@ public class storeDAO extends DAOBase implements DAOBaseOperate {
             if(ad!=null)
                 sql = sql + "address=\'"+ad+"\'"+dot;
             sql = sql.substring(0,sql.length()-dot.length());
-            String where = " where storeid="+sid;
+            String where = " where storeid=\'"+sid+"\'";
             sql = sql + where;
             System.out.println(sql);
             st.executeUpdate(sql);
@@ -97,7 +97,7 @@ public class storeDAO extends DAOBase implements DAOBaseOperate {
         try {
             conn= super.getConn();
             st = conn.createStatement();
-            String sql = "select * from store where storeid=" +sid;
+            String sql = "select * from store where storeid=\'" +sid+"\'";
             rs = st.executeQuery(sql);
             while(rs.next()) {
                 s.setStoreid(sid);
@@ -125,11 +125,11 @@ public class storeDAO extends DAOBase implements DAOBaseOperate {
             String sql = "select * from store where ";
             String and = " and ";
             if(sid!=null)
-                sql = sql + "storeid="+sid+and;
+                sql = sql + "storeid=\'"+sid+"\'"+and;
             if(info!=null)
-                sql = sql + "ownerinfo="+info+and;
+                sql = sql + "ownerinfo=\'"+info+"\'"+and;
             if(ad!=null)
-                sql = sql + "address="+ad+and;
+                sql = sql + "address=\'"+ad+"\'"+and;
             sql = sql.substring(0,sql.length()-and.length());
             System.out.println(sql);
             rs = st.executeQuery(sql);

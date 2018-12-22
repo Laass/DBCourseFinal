@@ -48,7 +48,7 @@ public class ordertableDAO extends DAOBase implements DAOBaseOperate {
             conn= super.getConn();
             st = conn.createStatement();
             String sql = "delete from ordertable "+
-                    "where orderid="+oid;
+                    "where orderid=\'"+oid+"\'";
             st.executeUpdate(sql);
             System.out.println("删除执行成功");
             flag = true;
@@ -71,11 +71,11 @@ public class ordertableDAO extends DAOBase implements DAOBaseOperate {
             String sql = "update ordertable set ";
             String dot = " , ";
             if(etime!=null)
-                sql = sql + "establishtime="+etime+dot;
+                sql = sql + "establishtime=\'"+etime+"\'"+dot;
             if(aid!=null)
-                sql = sql + "addressid="+aid+dot;
+                sql = sql + "addressid=\'"+aid+"\'"+dot;
             sql = sql.substring(0,sql.length()-dot.length());
-            String where = " where orderid="+oid;
+            String where = " where orderid=\'"+oid+"\'";
             sql = sql + where;
             st.executeUpdate(sql);
             System.out.println("更新执行成功");
@@ -96,7 +96,7 @@ public class ordertableDAO extends DAOBase implements DAOBaseOperate {
         try {
             conn= super.getConn();
             st = conn.createStatement();
-            String sql = "select * from ordertable where orderid=" +oid;
+            String sql = "select * from ordertable where orderid=\'" +oid+"\'";
             rs = st.executeQuery(sql);
             while(rs.next()) {
                 o.setOrderid(oid);
@@ -128,11 +128,11 @@ public class ordertableDAO extends DAOBase implements DAOBaseOperate {
             String sql = "select * from ordertable where ";
             String and = " and ";
             if(oid!=null)
-                sql = sql + "orderid="+oid+and;
+                sql = sql + "orderid=\'"+oid+"\'"+and;
             if(etime!=null)
-                sql = sql + "establishtime="+etime+and;
+                sql = sql + "establishtime=\'"+etime+"\'"+and;
             if(aid!=null)
-                sql = sql + "addressid="+aid+and;
+                sql = sql + "addressid=\'"+aid+"\'"+and;
             sql = sql.substring(0,sql.length()-and.length());
             System.out.println(sql);
             rs = st.executeQuery(sql);

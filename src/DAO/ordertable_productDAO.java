@@ -46,7 +46,7 @@ public class ordertable_productDAO extends DAOBase implements DAOBaseOperate {
             conn= super.getConn();
             st = conn.createStatement();
             String sql = "delete from ordertable_product "+
-                    "where orderid="+opk.getOrderid()+" and pid="+opk.getPid();
+                    "where orderid=\'"+opk.getOrderid()+"\' and \'"+opk.getPid()+"\'";
             st.executeUpdate(sql);
             System.out.println("删除执行成功");
             flag = true;
@@ -66,8 +66,8 @@ public class ordertable_productDAO extends DAOBase implements DAOBaseOperate {
             conn = super.getConn();
             st = conn.createStatement();
             String sql = "update ordertable_product set "+
-                    "pnum="+op.getProNum()+
-                    " where orderid="+op.getKey().getOrderid()+" and pid="+op.getKey().getPid();
+                    "pnum=\'"+op.getProNum()+"\'"+
+                    " where orderid=\'"+op.getKey().getOrderid()+"\' and pid=\'"+op.getKey().getPid()+"\'";
             st.executeUpdate(sql);
             System.out.println("更新执行成功");
             flag = true;
@@ -87,9 +87,9 @@ public class ordertable_productDAO extends DAOBase implements DAOBaseOperate {
         try {
             conn= super.getConn();
             st = conn.createStatement();
-            String sql = "select * from ordertable_product where orderid="
-                    +opk.getOrderid()+" and pid="
-                    +opk.getPid();
+            String sql = "select * from ordertable_product where orderid=\'"
+                    +opk.getOrderid()+"\' and pid=\'"
+                    +opk.getPid()+"\'";
             rs = st.executeQuery(sql);
             while(rs.next()) {
                 umpt.setKey(opk);
@@ -109,7 +109,7 @@ public class ordertable_productDAO extends DAOBase implements DAOBaseOperate {
      * pnum没有填-1
      */
     public List<ordertable_product> search(String oid, String pid, int pnum) throws SQLException{
-        if(oid==null&&pid==null&&pnum<0){
+        if(oid==null&&pid==null&&pnum<=0){
             return null;
         }
         List<ordertable_product> list = new ArrayList<ordertable_product>();
@@ -122,13 +122,13 @@ public class ordertable_productDAO extends DAOBase implements DAOBaseOperate {
             String sql = "select * from ordertable_product where ";
             String and = " and ";
             if(oid!=null){
-                sql = sql + "orderid="+oid+and;
+                sql = sql + "orderid=\'"+oid+"\'"+and;
             }
             if(pid!=null){
-                sql = sql + "pid="+pid+and;
+                sql = sql + "pid=\'"+pid+"\'"+and;
             }
             if(pnum>=0){
-                sql = sql + "pnum="+pnum+and;
+                sql = sql + "pnum=\'"+pnum+"\'"+and;
             }
             sql = sql.substring(0,sql.length()-and.length());
             System.out.println(sql);

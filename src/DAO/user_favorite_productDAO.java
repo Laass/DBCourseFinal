@@ -46,7 +46,7 @@ public class user_favorite_productDAO extends DAOBase implements DAOBaseOperate<
             conn= super.getConn();
             st = conn.createStatement();
             String sql = "delete from user_favorite_product "+
-                    "where userid="+up.getUserid()+" and pid="+up.getProductid();
+                    "where userid=\'"+up.getUserid()+"\' and pid=\'"+up.getProductid()+"\'";
             st.executeUpdate(sql);
             System.out.println("删除执行成功");
             flag = true;
@@ -66,9 +66,9 @@ public class user_favorite_productDAO extends DAOBase implements DAOBaseOperate<
         try {
             conn= super.getConn();
             st = conn.createStatement();
-            String sql = "select * from user_favorite_product where userid="
-                    +up.getUserid()+" and pid="
-                    +up.getProductid();
+            String sql = "select * from user_favorite_product where userid=\'"
+                    +up.getUserid()+"\' and pid=\'"
+                    +up.getProductid()+"\'";
             rs = st.executeQuery(sql);
             while(rs.next()) {
                 umpt.setKey(up);
@@ -100,10 +100,10 @@ public class user_favorite_productDAO extends DAOBase implements DAOBaseOperate<
             String sql = "select * from user_favorite_product where ";
             String and = " and ";
             if(uid!=null){
-                sql = sql + "userid="+uid+and;
+                sql = sql + "userid=\'"+uid+"\'"+and;
             }
             if(pid!=null){
-                sql = sql + "pid="+pid+and;
+                sql = sql + "pid=\'"+pid+"\'"+and;
             }
             sql = sql.substring(0,sql.length()-and.length());
             System.out.println(sql);

@@ -44,7 +44,7 @@ public class user_wanna_productDAO extends DAOBase implements DAOBaseOperate<Obj
             conn= super.getConn();
             st = conn.createStatement();
             String sql = "delete from user_wanna_product "+
-                    "where userid="+up.getUserid()+" and pid="+up.getProductid();
+                    "where userid=\'"+up.getUserid()+"\' and pid=\'"+up.getProductid()+"\'";
             st.executeUpdate(sql);
             System.out.println("删除执行成功");
             flag = true;
@@ -64,8 +64,8 @@ public class user_wanna_productDAO extends DAOBase implements DAOBaseOperate<Obj
             conn = super.getConn();
             st = conn.createStatement();
             String sql = "update user_wanna_product set "+
-                    "proNum="+uwp.getProNum()+
-                    " where userid="+uwp.getKey().getUserid()+" and pid="+uwp.getKey().getProductid();
+                    "proNum=\'"+uwp.getProNum()+
+                    "\' where userid=\'"+uwp.getKey().getUserid()+"\' and pid=\'"+uwp.getKey().getProductid()+"\'";
             st.executeUpdate(sql);
             System.out.println("更新执行成功");
             flag = true;
@@ -85,9 +85,9 @@ public class user_wanna_productDAO extends DAOBase implements DAOBaseOperate<Obj
         try {
             conn= super.getConn();
             st = conn.createStatement();
-            String sql = "select * from user_wanna_product where userid="
-                    +up.getUserid()+" and pid="
-                    +up.getProductid();
+            String sql = "select * from user_wanna_product where userid=\'"
+                    +up.getUserid()+"\' and pid=\'"
+                    +up.getProductid()+"\'";
             rs = st.executeQuery(sql);
             while(rs.next()) {
                 umpt.setKey(up);
@@ -107,7 +107,7 @@ public class user_wanna_productDAO extends DAOBase implements DAOBaseOperate<Obj
      * pnum没有填-1
      */
     public List<user_wanna_product> search(String uid, String pid, int pnum) throws SQLException{
-        if(uid==null&&pid==null&&pnum<0){
+        if(uid==null&&pid==null&&pnum<=0){
             return null;
         }
         List<user_wanna_product> list = new ArrayList<user_wanna_product>();
@@ -120,13 +120,13 @@ public class user_wanna_productDAO extends DAOBase implements DAOBaseOperate<Obj
             String sql = "select * from user_wanna_product where ";
             String and = " and ";
             if(uid!=null){
-                sql = sql + "userid="+uid+and;
+                sql = sql + "userid=\'"+uid+"\'"+and;
             }
             if(pid!=null){
-                sql = sql + "pid="+pid+and;
+                sql = sql + "pid=\'"+pid+"\'"+and;
             }
             if(pnum>=0){
-                sql = sql + "proNum="+pnum+and;
+                sql = sql + "proNum=\'"+pnum+"\'"+and;
             }
             sql = sql.substring(0,sql.length()-and.length());
             System.out.println(sql);
