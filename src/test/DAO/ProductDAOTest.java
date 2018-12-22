@@ -39,7 +39,7 @@ public class ProductDAOTest {
     public void testInsert() throws Exception {
     //TODO: Test goes here...
         Product pro = new Product(22, "2018女装毛衣", "详情介绍", "e:/", null, "1");
-        new ProductDAO().insert(pro);
+        assert (new ProductDAO().insert(pro));
     }
 
     /**

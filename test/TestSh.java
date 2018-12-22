@@ -99,8 +99,5 @@ public class TestSh
             e.printStackTrace();
         }
 
-//        TypeTree tt = new TypeTree();
-//        tt.createTree(tt,2,4,"");
-//        System.out.println(tt.getFanum());
     }
 }
