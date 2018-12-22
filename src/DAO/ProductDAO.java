@@ -86,17 +86,18 @@ public class ProductDAO extends DAOBase implements DAOBaseOperate <Product> {
         try {
             String sql = "update product set ";
             if (o.getTitle() != null)
-                sql += "title = '" + o.getTitle() + "'";
+                sql += "title = '" + o.getTitle() + "', ";
             if (o.getContent() != null)
-                sql += ", content = '" + o.getContent() + "'";
+                sql += "content = '" + o.getContent() + "', ";
             if (o.getPrice() != 0)
-                sql += ", price = '" + o.getPrice() + "'";
+                sql += "price = '" + o.getPrice() + "', ";
             if (o.getMark() != null)
-                sql += ", mark = '" + o.getMark() + "'";
+                sql += "mark = '" + o.getMark() + "', ";
             if(o.getImagePath() != null)
-                sql += ", imagePath = '" + o.getImagePath()+ "'";
+                sql += "imagePath = '" + o.getImagePath()+ "', ";
             if(o.getType() != null)
-                sql += ", type = '" + o.getType() + "'";
+                sql += "type = '" + o.getType() + "', ";
+            sql = sql.substring(0, sql.length() - 2);
             sql += " where pid = ?";
             pst = conn.prepareStatement(sql);
             pst.setString(1, o.getPid());
