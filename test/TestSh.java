@@ -11,7 +11,6 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Date;
 
-
 public class TestSh
 {
     public static void main(String[] args)
@@ -100,5 +99,8 @@ public class TestSh
             e.printStackTrace();
         }
 
+//        TypeTree tt = new TypeTree();
+//        tt.createTree(tt,2,4,"");
+//        System.out.println(tt.getFanum());
     }
 }

@@ -1,6 +1,7 @@
 package DAO;
 
 import po.ProductClassify;
+import po.TypeTree;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,7 +9,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 public class ProductClassifyDAO extends DAOBase implements DAOBaseOperate <ProductClassify>{
 
@@ -150,6 +150,76 @@ public class ProductClassifyDAO extends DAOBase implements DAOBaseOperate <Produ
 
         super.closeConn(conn, pst, rset);
         return list;
+    }
+
+    public List<ProductClassify> findProductInTypeRange(TypeTree tt) throws SQLException{
+
+        Connection conn = super.getConn();
+        PreparedStatement pst = null;
+        ProductClassify pc = null;
+        ResultSet rset = null;
+        List<ProductClassify> list = new ArrayList<ProductClassify>();
+        String sql;
+
+        try {
+            sql = "select * from producttype_classify where productTypeid >= ? AND productTypeid <= ?";
+
+            pst = conn.prepareStatement(sql);
+            pst.setInt(1, tt.getRangepre());
+            pst.setInt(2, tt.getRangenex());
+            rset = pst.executeQuery();
+
+            while(rset.next()) {
+                list.add(new ProductClassify(rset.getInt(1),rset.getString(2),rset.getString(3)));
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        super.closeConn(conn, pst, rset);
+        return list;
+    }
+
+    public List<ProductClassify> findProductByPath(String path) throws SQLException{
+        Connection conn = super.getConn();
+        PreparedStatement pst = null;
+        ProductClassify pc = null;
+        ResultSet rset = null;
+        List<ProductClassify> list = new ArrayList<ProductClassify>();
+
+        try {
+            String sql = "select * from producttype_classify";
+
+            pst = conn.prepareStatement(sql);
+            rset = pst.executeQuery();
+
+            while(rset.next()) {
+                if(rset.getString(3) != null && rset.getString(3).contains(path))
+                    list.add(new ProductClassify(rset.getInt(1),rset.getString(2),rset.getString(3)));
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        super.closeConn(conn, pst, rset);
+        return list;
+    }
+
+    /**
+     *
+     * @param path 原路径
+     * @param matchPath 用于匹配的路径
+     * @return
+     */
+    private Boolean matchPath(String path, String matchPath){
+        String[] paths = matchPath.split("/");
+        for (int i = 0; i < paths.length; ++i){
+            if(!path.contains(paths[i]))
+                return false;
+        }
+        return true;
     }
 
 }
