@@ -98,6 +98,6 @@ public class TestSh
         {
             e.printStackTrace();
         }
-
+        System.out.println(list.get(0).getOwnerinfo());
     }
 }
