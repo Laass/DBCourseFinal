@@ -137,7 +137,7 @@ public class TestSh
 //
 //            ptdao.insertChildrenType("女装上衣","衬衫");
 //            ptdao.insertChildrenType("女装上衣","毛衣");
-            ptdao.insertChildrenType(40960, "奶粉");
+//            ptdao.insertChildrenType(40960, "奶粉");
 
         }
         catch (SQLException e)
