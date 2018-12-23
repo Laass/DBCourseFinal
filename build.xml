@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<project name="project" default="junit">
+    <property name="run.classpath" value="bin"/>
+    <property name="run.srcpath" value="src"/>
+    <property name="test.xml" value="xml"/>
+    <property name="test.report" value="report"/>
+    <property name="lib.dir" value="lib"/>
+
+    <target name="init">
+        <delete dir="${test.report}"/>
+        <mkdir dir="${test.report}"/>
+        <delete dir="${test.xml}"/>
+        <mkdir dir="${test.xml}"/>
+    </target>
+
+    <target name="compile" depends="init">
+        <javac destdir="${run.classpath}" srcdir="${run.srcpath}"  includeantruntime="on"/>
+    </target>
+
+    <!--Junit task-->
+    <target name="junit" depends="compile">
+        <junit printsummary="false">
+            <classpath path="${run.classpath}"/>
+            <formatter type="xml"/>
+            <batchtest todir="${test.xml}">
+                <fileset dir="${run.classpath}">
+                    <!--运行${run.classpath}下所有和"**/*.class"匹配的用例-->
+                    <include name="**/*.class"/>
+                </fileset>
+            </batchtest>
+        </junit>
+        <junitreport todir="${test.xml}">
+            <fileset dir="${test.xml}">
+                <include name="TEST-*.xml"/>
+            </fileset>
+            <report format="frames" todir="${test.report}"/>
+        </junitreport>
+    </target>
+</project>
