@@ -2,7 +2,7 @@ package po;
 
 public class ProductType {
 
-    private int produtTypeId;
+    private int produtTypeId = 0;
     private String typeName;
 
     public ProductType(){}

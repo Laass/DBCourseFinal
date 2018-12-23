@@ -49,7 +49,7 @@ public class ProductTypeDAO extends DAOBase implements DAOBaseOperate<ProductTyp
         tt.createTree(tt,4,16,"");
         //判断该类别是否有子类别
         TypeTree ttnode = tt.getRange(parentProductTypeId);
-        if(ttnode == null && ttnode.getRangepre() == 0)
+        if(ttnode == null || ttnode.getRangepre() == 0)
             return false;
 
         //获得该父类别的区域范围
@@ -108,7 +108,7 @@ public class ProductTypeDAO extends DAOBase implements DAOBaseOperate<ProductTyp
         int flag = 0;
 
         try {
-            String sql = "delete from producttype_classify where productTypeid = ?";
+            String sql = "delete from producttype where productTypeid = ?";
             pst = conn.prepareStatement(sql);
 
             pst.setInt(1, o.getProdutTypeId());
@@ -121,7 +121,7 @@ public class ProductTypeDAO extends DAOBase implements DAOBaseOperate<ProductTyp
 
         super.closeConn(conn,pst);
 
-        if(flag == 0)
+        if(flag <= 0)
             return false;
         else
             return true;
@@ -134,7 +134,7 @@ public class ProductTypeDAO extends DAOBase implements DAOBaseOperate<ProductTyp
         int flag = 0;
 
         try {
-            String sql = "update producttype_classify set typeName = ? where productTypeid = ?";
+            String sql = "update producttype set typeName = ? where productTypeid = ?";
             pst = conn.prepareStatement(sql);
 
             pst.setString(1, o.getTypeName());
@@ -148,7 +148,7 @@ public class ProductTypeDAO extends DAOBase implements DAOBaseOperate<ProductTyp
 
         super.closeConn(conn,pst);
 
-        if(flag == 0)
+        if(flag <= 0)
             return false;
         else
             return true;
@@ -163,7 +163,7 @@ public class ProductTypeDAO extends DAOBase implements DAOBaseOperate<ProductTyp
         ProductType pt = null;
 
         try {
-            if(o.getTypeName() == null) {
+            if(o.getProdutTypeId() != 0) {
                 sql = "select * from producttype where productTypeid = ?";
                 pst = conn.prepareStatement(sql);
                 pst.setInt(1, o.getProdutTypeId());
