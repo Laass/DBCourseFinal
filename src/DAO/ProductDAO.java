@@ -22,11 +22,11 @@ public class ProductDAO extends DAOBase implements DAOBaseOperate <Product> {
         try {
             String sql = "insert into product (pid,price,title,content, type, imagePath, mark, storeid) values(?,?,?,?,?,?,?,?)";
             pst = conn.prepareStatement(sql);
-            if(o.getPid() == null)
+            if (o.getPid() == null)
                 o.setPid(UUID.randomUUID().toString().replace("-", ""));
 
             pst.setString(1, o.getPid());
-            pst.setString(2,o.getPrice()+"");
+            pst.setString(2, o.getPrice() + "");
             pst.setString(3, o.getTitle());
             pst.setString(4, o.getContent());
             pst.setString(5, o.getType());
@@ -35,14 +35,13 @@ public class ProductDAO extends DAOBase implements DAOBaseOperate <Product> {
             pst.setString(8, o.getStoreid());
 
             flag = pst.executeUpdate();
-
-        }catch (Exception e){
+        }catch (SQLException e){
             e.printStackTrace();
         }
 
         super.closeConn(conn,pst);
 
-        if(flag == 0)
+        if(flag <= 0)
             return false;
         else
             return true;
@@ -54,27 +53,33 @@ public class ProductDAO extends DAOBase implements DAOBaseOperate <Product> {
     }
 
     private Boolean deleteProduct(String pid) throws SQLException{
-        Connection conn = super.getConn();
+
+        Connection conn = null;
+        int flag = 0;
         PreparedStatement pst = null;
-        int flag = 0;;
 
         try {
+            conn = super.getConn();
+
+            if (pid == null)
+                return false;
+
             String sql = "delete from product where pid=?";
             pst = conn.prepareStatement(sql);
             pst.setString(1, pid);
 
             flag = pst.executeUpdate();
-
-        }catch (Exception e){
+        } catch (SQLException e){
             e.printStackTrace();
+        }finally {
+            super.closeConn(conn,pst);
+
+            if(flag <= 0)
+                return false;
+            else
+                return true;
         }
 
-        super.closeConn(conn,pst);
-
-        if(flag == 0)
-            return false;
-        else
-            return true;
     }
 
    @Override
@@ -93,27 +98,27 @@ public class ProductDAO extends DAOBase implements DAOBaseOperate <Product> {
                 sql += "price = '" + o.getPrice() + "', ";
             if (o.getMark() != null)
                 sql += "mark = '" + o.getMark() + "', ";
-            if(o.getImagePath() != null)
-                sql += "imagePath = '" + o.getImagePath()+ "', ";
-            if(o.getType() != null)
+            if (o.getImagePath() != null)
+                sql += "imagePath = '" + o.getImagePath() + "', ";
+            if (o.getType() != null)
                 sql += "type = '" + o.getType() + "', ";
+            if (o.getStoreid() != null)
+                sql += "storeid = '" + o.getStoreid() + "', ";
             sql = sql.substring(0, sql.length() - 2);
             sql += " where pid = ?";
             pst = conn.prepareStatement(sql);
             pst.setString(1, o.getPid());
 
             flag = pst.executeUpdate();
-
-        }catch (Exception e){
+        }catch (SQLException e){
             e.printStackTrace();
+        }finally {
+            super.closeConn(conn,pst);
+            if(flag <= 0)
+                return false;
+            else
+                return true;
         }
-
-        super.closeConn(conn,pst);
-
-        if(flag == 0)
-            return false;
-        else
-            return true;
     }
 
     @Override
@@ -150,7 +155,7 @@ public class ProductDAO extends DAOBase implements DAOBaseOperate <Product> {
         //构建类别树，知晓类别下分范围
         //获取类别下分范围的所有产品
        TypeTree tt = new TypeTree();
-       tt.createTree(tt,2,4,"");
+       tt.createTree(tt,4,16,"");
        List<Product> lpo = new ArrayList<Product>();
        ProductTypeDAO ptdao = new ProductTypeDAO();
        ProductType pt = new ProductType();

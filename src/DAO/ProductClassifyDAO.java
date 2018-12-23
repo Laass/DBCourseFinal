@@ -62,7 +62,7 @@ public class ProductClassifyDAO extends DAOBase implements DAOBaseOperate <Produ
 
         super.closeConn(conn,pst);
 
-        if(flag == 0)
+        if(flag <= 0)
             return false;
         else
             return true;
@@ -75,12 +75,16 @@ public class ProductClassifyDAO extends DAOBase implements DAOBaseOperate <Produ
         int flag = 0;
 
         try {
-            String sql = "update producttype_classify set path = ?";
+            String sql = "update producttype_classify set path = ? where ";
 
-            if(o.getPath() != null)
+            if(o.getPid() != null)
+                sql += "pid = '" + o.getPid() + "'";
+            if(o.getPid() != null && o.getProductTypeid() != 0)
+                sql += "AND productTypeid = '" + o.getProductTypeid() + "'";
+            else if(o.getPid() == null && o.getProductTypeid() != 0)
+                sql += "productTypeid = '" + o.getProductTypeid() + "'";
 
             pst = conn.prepareStatement(sql);
-
             pst.setString(1, o.getPath());
 
             flag = pst.executeUpdate();
@@ -91,7 +95,7 @@ public class ProductClassifyDAO extends DAOBase implements DAOBaseOperate <Produ
 
         super.closeConn(conn,pst);
 
-        if(flag == 0)
+        if(flag <= 0)
             return false;
         else
             return true;
@@ -108,9 +112,9 @@ public class ProductClassifyDAO extends DAOBase implements DAOBaseOperate <Produ
         try {
             if(o.getPid() != null && o.getProductTypeid() != 0)
                 sql = "select * from producttype_classify where productTypeid = '"+o.getProductTypeid()+"' AND pid = '"+o.getPid()+"'";
-            else if (o.getPid() != null)
-                sql = "select * from producttype_classify where productTypeid = '"+o.getProductTypeid()+"'";
             else if (o.getProductTypeid() != 0)
+                sql = "select * from producttype_classify where productTypeid = '"+o.getProductTypeid()+"'";
+            else if (o.getPid() != null)
                 sql = "select * from producttype_classify where pid = '"+o.getPid()+"'";
 
             pst = conn.prepareStatement(sql);
