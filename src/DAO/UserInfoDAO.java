@@ -109,9 +109,17 @@ public class UserInfoDAO extends DAOBase implements DAOBaseOperate<UserInfo>
         PreparedStatement ps=conn.prepareStatement("SELECT * FROM userinfo WHERE userid LIKE ?");
         ps.setString(1,'%'+partOfId+'%');
         ResultSet rs=ps.executeQuery();
-        ArrayList<UserInfo> uiList=new ArrayList<>();
+        ArrayList<UserInfo> uiList=null;
+        boolean first=true;
         while(rs.next())
+        {
+            if(first)
+            {
+                uiList=new ArrayList<>();
+                first=false;
+            }
             uiList.add(new UserInfo(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4).charAt(0),rs.getTimestamp(5),rs.getString(6)));
+        }
         super.closeConn(conn,ps,rs);
         return uiList;
     }
@@ -122,9 +130,17 @@ public class UserInfoDAO extends DAOBase implements DAOBaseOperate<UserInfo>
         PreparedStatement ps=conn.prepareStatement("SELECT * FROM userinfo WHERE nickname LIKE ?");
         ps.setString(1,'%'+partOfNick+'%');
         ResultSet rs=ps.executeQuery();
-        ArrayList<UserInfo> uiList=new ArrayList<>();
+        ArrayList<UserInfo> uiList=null;
+        boolean first=true;
         while(rs.next())
+        {
+            if(first)
+            {
+                uiList=new ArrayList<>();
+                first=false;
+            }
             uiList.add(new UserInfo(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4).charAt(0),rs.getTimestamp(5),rs.getString(6)));
+        }
         super.closeConn(conn,ps,rs);
         return uiList;
     }
@@ -138,10 +154,18 @@ public class UserInfoDAO extends DAOBase implements DAOBaseOperate<UserInfo>
             ps.setString(2,s.toString().toLowerCase());
         else
             ps.setString(2,s.toString().toUpperCase());
-        ArrayList<UserInfo> uiList=new ArrayList<>();
+        ArrayList<UserInfo> uiList=null;
         ResultSet rs=ps.executeQuery();
+        boolean first=true;
         while(rs.next())
+        {
+            if(first)
+            {
+                uiList=new ArrayList<>();
+                first=false;
+            }
             uiList.add(new UserInfo(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4).charAt(0),rs.getTimestamp(5),rs.getString(6)));
+        }
         super.closeConn(conn,ps,rs);
         return uiList;
     }

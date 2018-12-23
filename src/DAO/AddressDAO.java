@@ -131,9 +131,17 @@ public class AddressDAO extends DAOBase implements DAOBaseOperate<Address>
         PreparedStatement ps=conn.prepareStatement("SELECT * FROM address WHERE address like ?");
         ps.setString(1,'%'+partOfAddress+'%');
         ResultSet rs=ps.executeQuery();
-        List<Address> aList=new ArrayList<>();
+        List<Address> aList=null;
+        boolean first=true;
         while(rs.next())
+        {
+            if(first)
+            {
+                aList=new ArrayList<>();
+                first=false;
+            }
             aList.add(new Address(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5)));
+        }
         super.closeConn(conn,ps,rs);
         return aList;
     }
@@ -151,8 +159,16 @@ public class AddressDAO extends DAOBase implements DAOBaseOperate<Address>
         ps.setString(1,'%'+receiver+'%');
         ResultSet rs=ps.executeQuery();
         List<Address> aList=new ArrayList<>();
+        boolean first=true;
         while(rs.next())
+        {
+            if(first)
+            {
+                aList=new ArrayList<>();
+                first=false;
+            }
             aList.add(new Address(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5)));
+        }
         super.closeConn(conn,ps,rs);
         return aList;
     }
@@ -170,8 +186,16 @@ public class AddressDAO extends DAOBase implements DAOBaseOperate<Address>
         ps.setString(1,'%'+tel+'%');
         ResultSet rs=ps.executeQuery();
         List<Address> aList=new ArrayList<>();
+        boolean first=true;
         while(rs.next())
+        {
+            if(first)
+            {
+                aList=new ArrayList<>();
+                first=false;
+            }
             aList.add(new Address(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5)));
+        }
         super.closeConn(conn,ps,rs);
         return aList;
     }
@@ -189,8 +213,16 @@ public class AddressDAO extends DAOBase implements DAOBaseOperate<Address>
         ps.setString(1,userId);
         ResultSet rs=ps.executeQuery();
         List<Address> aList=new ArrayList<>();
+        boolean first=true;
         while(rs.next())
+        {
+            if(first)
+            {
+                aList=new ArrayList<>();
+                first=false;
+            }
             aList.add(new Address(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5)));
+        }
         super.closeConn(conn,ps,rs);
         return aList;
     }
