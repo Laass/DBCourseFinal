@@ -79,6 +79,11 @@ public class Comment
     {
     }
 
+    public Comment(String commentId)
+    {
+        this.commentId = commentId;
+    }
+
     @Override
     public String toString()
     {
