@@ -145,9 +145,17 @@ public class CommentDAO extends DAOBase implements DAOBaseOperate<Comment>
         PreparedStatement ps=conn.prepareStatement("SELECT * FROM comment WHERE userid=?");
         ps.setString(1,userId);
         ResultSet rs=ps.executeQuery();
-        List<Comment> cList=new ArrayList<>();
+        List<Comment> cList=null;
+        boolean first=true;
         while(rs.next())
+        {
+            if(first)
+            {
+                cList=new ArrayList<>();
+                first=false;
+            }
             cList.add(new Comment(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5).charAt(0)));
+        }
         super.closeConn(conn,ps,rs);
         return cList;
     }
@@ -159,8 +167,16 @@ public class CommentDAO extends DAOBase implements DAOBaseOperate<Comment>
         ps.setString(1,pId);
         ResultSet rs=ps.executeQuery();
         List<Comment> cList=new ArrayList<>();
+        boolean first=true;
         while(rs.next())
+        {
+            if(first)
+            {
+                cList=new ArrayList<>();
+                first=false;
+            }
             cList.add(new Comment(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5).charAt(0)));
+        }
         super.closeConn(conn,ps,rs);
         return cList;
     }
@@ -178,8 +194,16 @@ public class CommentDAO extends DAOBase implements DAOBaseOperate<Comment>
         ps.setString(1,'%'+partOfContent+'%');
         ResultSet rs=ps.executeQuery();
         List<Comment> cList=new ArrayList<>();
+        boolean first=true;
         while(rs.next())
+        {
+            if(first)
+            {
+                cList=new ArrayList<>();
+                first=false;
+            }
             cList.add(new Comment(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5).charAt(0)));
+        }
         super.closeConn(conn,ps,rs);
         return cList;
     }

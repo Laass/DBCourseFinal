@@ -83,6 +83,11 @@ public class UserInfo
 
     public UserInfo(){}
 
+    public UserInfo(String userId)
+    {
+        this.userId = userId;
+    }
+
     @Override
     public String toString()
     {

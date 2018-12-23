@@ -10,11 +10,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ordertable_productDAO extends DAOBase implements DAOBaseOperate {
-    public Boolean insert(Object o) throws SQLException { return false;}
-    public Boolean delete(Object o) throws SQLException{ return false;}
-    public Boolean update(Object o) throws SQLException{ return false;}
-    public Object get(Object o) throws SQLException{ return null;}
+public class ordertable_productDAO extends DAOBase implements DAOBaseOperate<ordertable_product> {
+    public Boolean delete(ordertable_product o) throws SQLException{ return delete(o.getKey());}
+    public ordertable_product get(ordertable_product o) throws SQLException{ return get(o.getKey());}
 
     public Boolean insert(ordertable_product op) throws SQLException{
         Boolean flag = false;
@@ -46,7 +44,7 @@ public class ordertable_productDAO extends DAOBase implements DAOBaseOperate {
             conn= super.getConn();
             st = conn.createStatement();
             String sql = "delete from ordertable_product "+
-                    "where orderid=\'"+opk.getOrderid()+"\' and \'"+opk.getPid()+"\'";
+                    "where orderid=\'"+opk.getOrderid()+"\' and pid=\'"+opk.getPid()+"\'";
             st.executeUpdate(sql);
             System.out.println("删除执行成功");
             flag = true;
@@ -58,7 +56,7 @@ public class ordertable_productDAO extends DAOBase implements DAOBaseOperate {
         }
     }
 
-    public Boolean update(ordertable_product op) throws Exception{
+    public Boolean update(ordertable_product op) throws SQLException{
         Boolean flag = false;
         Connection conn = null;
         Statement st = null;
@@ -127,7 +125,7 @@ public class ordertable_productDAO extends DAOBase implements DAOBaseOperate {
             if(pid!=null){
                 sql = sql + "pid=\'"+pid+"\'"+and;
             }
-            if(pnum>=0){
+            if(pnum>0){
                 sql = sql + "pnum=\'"+pnum+"\'"+and;
             }
             sql = sql.substring(0,sql.length()-and.length());

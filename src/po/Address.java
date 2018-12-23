@@ -79,6 +79,11 @@ public class Address
     {
     }
 
+    public Address(String addressId)
+    {
+        this.addressId = addressId;
+    }
+
     @Override
     public String toString()
     {

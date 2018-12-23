@@ -11,11 +11,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 //没有update函数
-public class favoriteDAO extends DAOBase implements DAOBaseOperate<Object> {
-    public Boolean insert(Object o) throws SQLException { return false;}
-    public Boolean delete(Object o) throws SQLException{ return false;}
-    public Boolean update(Object o) throws SQLException{ return false;}
-    public Object get(Object o) throws SQLException{ return null;}
+public class favoriteDAO extends DAOBase implements DAOBaseOperate<favorite> {
+    public Boolean delete(favorite o) throws SQLException{ return delete(o.getKey());}
+    @Deprecated
+    public Boolean update(favorite o) throws SQLException{ return false;}
+    public favorite get(favorite o) throws SQLException{ return get(o.getKey());}
 
     public Boolean insert(favorite ufp) throws SQLException{
         Boolean flag = false;

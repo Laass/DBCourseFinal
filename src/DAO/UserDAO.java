@@ -178,9 +178,17 @@ public class UserDAO extends DAOBase implements DAOBaseOperate<User>
         PreparedStatement ps=conn.prepareStatement("SELECT * FROM user WHERE userid LIKE ?");
         ps.setString(1,'%'+partOfId+'%');
         ResultSet rs=ps.executeQuery();
-        ArrayList<User> uList=new ArrayList<>();
+        ArrayList<User> uList=null;
+        boolean first=true;
         while(rs.next())
+        {
+            if(first)
+            {
+                uList=new ArrayList<>();
+                first=false;
+            }
             uList.add(new User(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4)));
+        }
         super.closeConn(conn,ps,rs);
         return uList;
     }
@@ -197,9 +205,17 @@ public class UserDAO extends DAOBase implements DAOBaseOperate<User>
         PreparedStatement ps=conn.prepareStatement("SELECT * FROM user WHERE email LIKE ?");
         ps.setString(1,'%'+partOfEmail+'%');
         ResultSet rs=ps.executeQuery();
-        ArrayList<User> uList=new ArrayList<>();
+        ArrayList<User> uList=null;
+        boolean first=true;
         while(rs.next())
+        {
+            if(first)
+            {
+                uList=new ArrayList<>();
+                first=false;
+            }
             uList.add(new User(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4)));
+        }
         super.closeConn(conn,ps,rs);
         return uList;
     }
