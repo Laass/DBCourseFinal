@@ -43,4 +43,15 @@ public class ordertable {
     public String getEstablishtime() {
         return establishtime;
     }
+
+    public String getTime(){
+        Calendar cl = Calendar.getInstance();
+        int year = cl.get(Calendar.YEAR);
+        int month = cl.get(Calendar.MONTH)+1;
+        int day = cl.get(Calendar.DAY_OF_MONTH);
+        int hour = cl.get(Calendar.HOUR);
+        int minute = cl.get(Calendar.MINUTE);
+        int second = cl.get(Calendar.SECOND);
+        return  year+"-"+month+"-"+day+" "+hour+":"+minute+":"+second;
+    }
 }
