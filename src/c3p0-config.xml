@@ -1,7 +1,7 @@
 <c3p0-config>
     <default-config>
         <property name="driverClass">com.mysql.cj.jdbc.Driver</property>
-        <property name="jdbcUrl">jdbc:mysql://localhost:3306/service_platform_db?useSSL=true&amp;serverTimezone=GMT</property>
+        <property name="jdbcUrl">jdbc:mysql://localhost:3306/dbfinal?useSSL=true&amp;serverTimezone=GMT</property>
         <property name="user">root</property>
         <property name="password">mysql</property>
 
@@ -11,7 +11,7 @@
         <!--初始化时获取十个连接，取值应在minPoolSize与maxPoolSize之间。Default: 8 -->
         <property name="initialPoolSize">8</property>
 
-        <!--连接池中保留的最大连接数。Default: 15 -->
+        <!--连接池中保留的最大连接数。Default: 20 -->
         <property name="maxPoolSize">20</property>
 
         <property name="minPoolSize">5</property>
@@ -25,7 +25,7 @@
     </default-config>
     <named-config name="MySQL">
         <property name="driverClass">com.mysql.cj.jdbc.Driver</property>
-        <property name="jdbcUrl">jdbc:mysql://localhost:3306/service_platform_db?useSSL=true&amp;serverTimezone=GMT</property>
+        <property name="jdbcUrl">jdbc:mysql://localhost:3306/dbfinal?useSSL=true&amp;serverTimezone=GMT</property>
         <property name="user">root</property>
         <property name="password">mysql</property>
         <property name="acquireIncrement">3</property>
