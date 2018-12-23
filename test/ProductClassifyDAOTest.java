@@ -58,14 +58,6 @@ class ProductClassifyDAOTest {
     }
 
     @Test
-    void findProductByType() {
-    }
-
-    @Test
-    void findProductInTypeRange() {
-    }
-
-    @Test
     void findProductByPath() throws SQLException {
         assertNotNull(new ProductClassifyDAO().findProductByPath("华为"));
         assertEquals(new ProductClassifyDAO().findProductByPath("123").size(), 0);
