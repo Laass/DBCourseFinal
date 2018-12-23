@@ -1,7 +1,7 @@
 package DAO;
 
 import po.upPrimaryKey;
-import po.user_favorite_product;
+import po.favorite;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -10,21 +10,21 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-//没有updaye函数
-public class user_favorite_productDAO extends DAOBase implements DAOBaseOperate<Object> {
+//没有update函数
+public class favoriteDAO extends DAOBase implements DAOBaseOperate<Object> {
     public Boolean insert(Object o) throws SQLException { return false;}
     public Boolean delete(Object o) throws SQLException{ return false;}
     public Boolean update(Object o) throws SQLException{ return false;}
     public Object get(Object o) throws SQLException{ return null;}
 
-    public Boolean insert(user_favorite_product ufp) throws SQLException{
+    public Boolean insert(favorite ufp) throws SQLException{
         Boolean flag = false;
         Connection conn = null;
         Statement st = null;
         try {
             conn = super.getConn();
             st = conn.createStatement();
-            String sql = "insert into user_favorite_product values("+
+            String sql = "insert into favorite values("+
                     "\'"+ufp.getKey().getUserid()+"\',"+
                     "\'"+ufp.getKey().getProductid()+"\'"+
                     ")";
@@ -45,7 +45,7 @@ public class user_favorite_productDAO extends DAOBase implements DAOBaseOperate<
         try {
             conn= super.getConn();
             st = conn.createStatement();
-            String sql = "delete from user_favorite_product "+
+            String sql = "delete from favorite "+
                     "where userid=\'"+up.getUserid()+"\' and pid=\'"+up.getProductid()+"\'";
             st.executeUpdate(sql);
             System.out.println("删除执行成功");
@@ -58,15 +58,15 @@ public class user_favorite_productDAO extends DAOBase implements DAOBaseOperate<
         }
     }
 
-    public user_favorite_product get(upPrimaryKey up) throws SQLException{
-        user_favorite_product umpt = new user_favorite_product();
+    public favorite get(upPrimaryKey up) throws SQLException{
+        favorite umpt = new favorite();
         Connection conn = null;
         Statement st = null;
         ResultSet rs = null;
         try {
             conn= super.getConn();
             st = conn.createStatement();
-            String sql = "select * from user_favorite_product where userid=\'"
+            String sql = "select * from favorite where userid=\'"
                     +up.getUserid()+"\' and pid=\'"
                     +up.getProductid()+"\'";
             rs = st.executeQuery(sql);
@@ -86,18 +86,18 @@ public class user_favorite_productDAO extends DAOBase implements DAOBaseOperate<
      * UID和pid没有填null
      * pnum没有填-1
      */
-    public List<user_favorite_product> search(String uid, String pid) throws SQLException{
+    public List<favorite> search(String uid, String pid) throws SQLException{
         if(uid==null&&pid==null){
             return null;
         }
-        List<user_favorite_product> list = new ArrayList<user_favorite_product>();
+        List<favorite> list = new ArrayList<favorite>();
         Connection conn = null;
         Statement st = null;
         ResultSet rs = null;
         try {
             conn= super.getConn();
             st = conn.createStatement();
-            String sql = "select * from user_favorite_product where ";
+            String sql = "select * from favorite where ";
             String and = " and ";
             if(uid!=null){
                 sql = sql + "userid=\'"+uid+"\'"+and;
@@ -109,7 +109,7 @@ public class user_favorite_productDAO extends DAOBase implements DAOBaseOperate<
             System.out.println(sql);
             rs = st.executeQuery(sql);
             while(rs.next()) {
-                user_favorite_product umpt = new user_favorite_product();
+                favorite umpt = new favorite();
                 upPrimaryKey up = new upPrimaryKey();
                 up.setUserid(rs.getString("userid"));
                 up.setProductid(rs.getString("pid"));

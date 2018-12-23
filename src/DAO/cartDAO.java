@@ -1,27 +1,27 @@
 package DAO;
 
-import po.user_wanna_product;
+import po.cart;
 import po.upPrimaryKey;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class user_wanna_productDAO extends DAOBase implements DAOBaseOperate<Object>{
+public class cartDAO extends DAOBase implements DAOBaseOperate<Object>{
 
     public Boolean insert(Object o) throws SQLException{ return false;}
     public Boolean delete(Object o) throws SQLException{ return false;}
     public Boolean update(Object o) throws SQLException{ return false;}
     public Object get(Object o) throws SQLException{ return null;}
 
-    public Boolean insert(user_wanna_product uwp) throws SQLException{
+    public Boolean insert(cart uwp) throws SQLException{
         Boolean flag = false;
         Connection conn = null;
         Statement st = null;
         try {
             conn = super.getConn();
             st = conn.createStatement();
-            String sql = "insert into user_wanna_product values("+
+            String sql = "insert into cart values("+
                     "\'"+uwp.getKey().getUserid()+"\',"+
                     "\'"+uwp.getKey().getProductid()+"\',"+
                     "\'"+uwp.getProNum()+"\'"+
@@ -43,7 +43,7 @@ public class user_wanna_productDAO extends DAOBase implements DAOBaseOperate<Obj
         try {
             conn= super.getConn();
             st = conn.createStatement();
-            String sql = "delete from user_wanna_product "+
+            String sql = "delete from cart "+
                     "where userid=\'"+up.getUserid()+"\' and pid=\'"+up.getProductid()+"\'";
             st.executeUpdate(sql);
             System.out.println("删除执行成功");
@@ -56,14 +56,14 @@ public class user_wanna_productDAO extends DAOBase implements DAOBaseOperate<Obj
         }
     }
 
-    public Boolean update(user_wanna_product uwp) throws Exception{
+    public Boolean update(cart uwp) throws Exception{
         Boolean flag = false;
         Connection conn = null;
         Statement st = null;
         try {
             conn = super.getConn();
             st = conn.createStatement();
-            String sql = "update user_wanna_product set "+
+            String sql = "update cart set "+
                     "proNum=\'"+uwp.getProNum()+
                     "\' where userid=\'"+uwp.getKey().getUserid()+"\' and pid=\'"+uwp.getKey().getProductid()+"\'";
             st.executeUpdate(sql);
@@ -77,15 +77,15 @@ public class user_wanna_productDAO extends DAOBase implements DAOBaseOperate<Obj
         }
     }
 
-    public user_wanna_product get(upPrimaryKey up) throws SQLException{
-        user_wanna_product umpt = new user_wanna_product();
+    public cart get(upPrimaryKey up) throws SQLException{
+        cart umpt = new cart();
         Connection conn = null;
         Statement st = null;
         ResultSet rs = null;
         try {
             conn= super.getConn();
             st = conn.createStatement();
-            String sql = "select * from user_wanna_product where userid=\'"
+            String sql = "select * from cart where userid=\'"
                     +up.getUserid()+"\' and pid=\'"
                     +up.getProductid()+"\'";
             rs = st.executeQuery(sql);
@@ -106,18 +106,18 @@ public class user_wanna_productDAO extends DAOBase implements DAOBaseOperate<Obj
      * UID和pid没有填null
      * pnum没有填-1
      */
-    public List<user_wanna_product> search(String uid, String pid, int pnum) throws SQLException{
+    public List<cart> search(String uid, String pid, int pnum) throws SQLException{
         if(uid==null&&pid==null&&pnum<=0){
             return null;
         }
-        List<user_wanna_product> list = new ArrayList<user_wanna_product>();
+        List<cart> list = new ArrayList<>();
         Connection conn = null;
         Statement st = null;
         ResultSet rs = null;
         try {
             conn= super.getConn();
             st = conn.createStatement();
-            String sql = "select * from user_wanna_product where ";
+            String sql = "select * from cart where ";
             String and = " and ";
             if(uid!=null){
                 sql = sql + "userid=\'"+uid+"\'"+and;
@@ -132,7 +132,7 @@ public class user_wanna_productDAO extends DAOBase implements DAOBaseOperate<Obj
             System.out.println(sql);
             rs = st.executeQuery(sql);
             while(rs.next()) {
-                user_wanna_product umpt = new user_wanna_product();
+                cart umpt = new cart();
                 upPrimaryKey up = new upPrimaryKey();
                 up.setUserid(rs.getString("userid"));
                 up.setProductid(rs.getString("pid"));
@@ -148,5 +148,4 @@ public class user_wanna_productDAO extends DAOBase implements DAOBaseOperate<Obj
             else return null;
         }
     }
-
 }

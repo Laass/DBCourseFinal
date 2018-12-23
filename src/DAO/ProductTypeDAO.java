@@ -37,7 +37,7 @@ public class ProductTypeDAO extends DAOBase implements DAOBaseOperate<ProductTyp
             return true;
     }
 
-    public Boolean insertChildrenType(int parentProductTypeId,ProductType o) throws SQLException {
+    public Boolean insertChildrenType(int parentProductTypeId,String typeName) throws SQLException {
 
         TypeTree tt = new TypeTree();
         Connection conn = super.getConn();
@@ -46,9 +46,10 @@ public class ProductTypeDAO extends DAOBase implements DAOBaseOperate<ProductTyp
         Boolean flag = true;
 
         //获取类别树
-        tt.createTree(tt, 2,4,"");
+        tt.createTree(tt,4,16,"");
         //判断该类别是否有子类别
-        if(tt.getRange(parentProductTypeId).getRangenex() == 0)
+        TypeTree ttnode = tt.getRange(parentProductTypeId);
+        if(ttnode == null && ttnode.getRangepre() == 0)
             return false;
 
         //获得该父类别的区域范围
@@ -69,11 +70,19 @@ public class ProductTypeDAO extends DAOBase implements DAOBaseOperate<ProductTyp
             //判断当前类别区域是否还有空位
             if(rset.next())
                 i = rset.getInt(1);
-            if(i == tt.getRangenex())
-                flag = false;
+            if (i == 0)
+            {
+                //第一子类
+                i = tt.getChildrens().get(0).getTypeIndex();
+            }
+            else{
+                i = tt.getChildrenIndex(i);
+            }
+            if(i == -1)
+                return false;
             else{
                 //插入新的子类别
-                insert(new ProductType(i+1, o.getTypeName()));
+                insert(new ProductType(i, typeName));
             }
 
         }catch (Exception e){
@@ -86,7 +95,13 @@ public class ProductTypeDAO extends DAOBase implements DAOBaseOperate<ProductTyp
         return flag;
     }
 
-    @Override
+    public Boolean insertChildrenType(String parentProductType,String typeName) throws SQLException {
+        ProductType pt= new ProductType();
+        pt.setTypeName(parentProductType);
+        return insertChildrenType(new ProductTypeDAO().get(pt).getProdutTypeId(), typeName);
+    }
+
+        @Override
     public Boolean delete(ProductType o) throws SQLException {
         Connection conn = super.getConn();
         PreparedStatement pst = null;

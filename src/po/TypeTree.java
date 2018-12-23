@@ -143,13 +143,26 @@ public class TypeTree {
         for(TypeTree i : childrens){
             if(i.getTypeIndex() == id)
                 return i;
-            if(id > i.getRangepre() && id < i.getRangenex()) {
+            if(id >= i.getRangepre() && id <= i.getRangenex()) {
                 TypeTree temp = i.getRange(id);
                 if(temp != null)
                     return temp;
+                else if(temp == null)
+                    return i;
             }
         }
         return null;
     }
+
+    public int getChildrenIndex(int typeIndex){
+        int n =0;
+        for(TypeTree i : this.childrens){
+            ++n;
+            if(i.getTypeIndex() == typeIndex)
+                return (childrens.get(n)).getTypeIndex();
+        }
+        return -1;
+    }
+
 
 }
