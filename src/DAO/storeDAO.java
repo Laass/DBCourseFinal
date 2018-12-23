@@ -10,11 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class storeDAO extends DAOBase implements DAOBaseOperate {
-    public Boolean insert(Object o) throws SQLException { return false;}
-    public Boolean delete(Object o) throws SQLException{ return false;}
-    public Boolean update(Object o) throws SQLException{ return false;}
-    public Object get(Object o) throws SQLException{ return null;}
+public class storeDAO extends DAOBase implements DAOBaseOperate<store> {
+    public Boolean delete(store o) throws SQLException{ return delete(o.getStoreid());}
+    public Boolean update(store o) throws SQLException{ return update(o.getStoreid(),o.getOwnerinfo(),o.getAddress());}
+    public store get(store o) throws SQLException{ return get(o.getStoreid());}
 
     public Boolean insert(store s) throws SQLException{
         Boolean flag = false;
@@ -60,7 +59,7 @@ public class storeDAO extends DAOBase implements DAOBaseOperate {
         }
     }
 
-    public Boolean update(String sid,String info,String ad) throws Exception{
+    public Boolean update(String sid,String info,String ad) throws SQLException{
         if(sid == null||(info==null&&ad==null)) return false;
         Boolean flag = false;
         Connection conn = null;

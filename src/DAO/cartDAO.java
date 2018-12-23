@@ -7,12 +7,10 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class cartDAO extends DAOBase implements DAOBaseOperate<Object>{
+public class cartDAO extends DAOBase implements DAOBaseOperate<cart>{
 
-    public Boolean insert(Object o) throws SQLException{ return false;}
-    public Boolean delete(Object o) throws SQLException{ return false;}
-    public Boolean update(Object o) throws SQLException{ return false;}
-    public Object get(Object o) throws SQLException{ return null;}
+    public Boolean delete(cart o) throws SQLException{ return delete(o.getKey());}
+    public cart get(cart o) throws SQLException{ return get(o.getKey());}
 
     public Boolean insert(cart uwp) throws SQLException{
         Boolean flag = false;
@@ -56,7 +54,7 @@ public class cartDAO extends DAOBase implements DAOBaseOperate<Object>{
         }
     }
 
-    public Boolean update(cart uwp) throws Exception{
+    public Boolean update(cart uwp) throws SQLException{
         Boolean flag = false;
         Connection conn = null;
         Statement st = null;
@@ -125,7 +123,7 @@ public class cartDAO extends DAOBase implements DAOBaseOperate<Object>{
             if(pid!=null){
                 sql = sql + "pid=\'"+pid+"\'"+and;
             }
-            if(pnum>=0){
+            if(pnum>0){
                 sql = sql + "proNum=\'"+pnum+"\'"+and;
             }
             sql = sql.substring(0,sql.length()-and.length());
