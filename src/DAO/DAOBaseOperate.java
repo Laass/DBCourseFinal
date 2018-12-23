@@ -35,6 +35,6 @@ public interface DAOBaseOperate <T extends Object>{
      * @return 如果获取成功，返回数据集合;反之返回{@code NULL}
      * @throws SQLException
      */
-    public List get(T o) throws SQLException;
+    public T get(T o) throws SQLException;
 
 }
